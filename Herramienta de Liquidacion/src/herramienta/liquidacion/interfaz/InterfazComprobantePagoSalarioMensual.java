@@ -29,7 +29,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
      */
     public InterfazComprobantePagoSalarioMensual() {
         initComponents();
-        this.getContentPane().setBackground(new java.awt.Color(255,255,204));
+        this.getContentPane().setBackground(new java.awt.Color(255, 255, 204));
 
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
@@ -40,7 +40,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
 
     public InterfazComprobantePagoSalarioMensual(Persona p) {
         initComponents();
-        this.getContentPane().setBackground(new java.awt.Color(255,255,204));
+        this.getContentPane().setBackground(new java.awt.Color(255, 255, 204));
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
         btngrpTipoDocumento.add(jrbtnCE);
@@ -597,7 +597,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnSalirActionPerformed
 
     private void jbtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimirActionPerformed
-        
+
     }//GEN-LAST:event_jbtnImprimirActionPerformed
 
     public boolean isNumeric(String cadena) {
@@ -621,9 +621,9 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         jtxtSegNombre.setText(this.persona.getSegNombre());
         jtxtPrimerApel.setText(this.persona.getPrimApel());
         jtxtSegApel.setText(this.persona.getSegApel());
-        jftxtDiasLab.setText(String.valueOf(this.persona.getDiastrab()));
-        jftxtSalBas.setText("$" + String.valueOf(this.persona.getSalbas()));
-        jftxtAuxTx.setText("$" + String.valueOf(this.persona.getAuxtrans()));
+        jftxtDiasLab.setValue(this.persona.getDiastrab());
+        jftxtSalBas.setValue(this.persona.getSalbas());
+        jftxtAuxTx.setValue(this.persona.getAuxtrans());
         jtxtNumDoc.setText(this.persona.getNumdoc());
         if (this.persona.getPerinicio() != null) {
             DateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
@@ -633,31 +633,15 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
             jfmtxtInicio.setText("");
             jfmtxtFin.setText("");
         }
+        jblsaldeven.setText(String.valueOf(this.persona.getSaldevengado()));
+        jblEPS.setText(String.valueOf(this.persona.getDesEps()));
+        jblPension.setText(String.valueOf(this.persona.getDesPension()));
+        jblAuxTx.setText(String.valueOf(this.persona.getBonoAuxTx()));
+        jblSalNeto.setText(String.valueOf(this.persona.getSalneto()));
     }
-    
-    public void cargarFormulario(Persona persona) {
-        jrbtnCC.setSelected(persona.getTipodoc() == TipoDocumento.CC);
-        jtxtPrimerNom.setText(persona.getPrimNombre());
-        jtxtSegNombre.setText(persona.getSegNombre());
-        jtxtPrimerApel.setText(persona.getPrimApel());
-        jtxtSegApel.setText(persona.getSegApel());
-        jftxtDiasLab.setText(String.valueOf(persona.getDiastrab()));
-        jftxtSalBas.setText("$" + String.valueOf(persona.getSalbas()));
-        jftxtAuxTx.setText("$" + String.valueOf(persona.getAuxtrans()));
-        jtxtNumDoc.setText(persona.getNumdoc());
-        if (persona.getPerinicio() != null) {
-            DateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
-            jfmtxtInicio.setText(df.format(persona.getPerinicio()));
-            jfmtxtFin.setText(df.format(persona.getPerfin()));
-        } else {
-            jfmtxtInicio.setText("");
-            jfmtxtFin.setText("");
-        }
-        jblsaldeven.setText(String.valueOf(persona.getSaldevengado()));
-        jblEPS.setText(String.valueOf(persona.getDesEps()));
-        jblPension.setText(String.valueOf(persona.getDesPension()));
-        jblAuxTx.setText(String.valueOf(persona.getBonoAuxTx()));
-        jblSalNeto.setText(String.valueOf(persona.getSalneto()));
+
+    public void setPersona(Persona p) {
+        this.persona = p;
     }
 
     /**

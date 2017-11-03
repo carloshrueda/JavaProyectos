@@ -68,7 +68,7 @@ public class Persona {
         this.desEps = p.desEps;
         this.desPension = p.desPension;
         this.bonoAuxTx = p.bonoAuxTx;
-        this.bonoAuxTx= p.bonoAuxTx;
+        this.salneto = p.salneto;
     }
 
     public TipoDocumento getTipodoc() {
@@ -205,6 +205,10 @@ public class Persona {
 
     public void setSalneto(int salneto) {
         this.salneto = salneto;
+    }
+    
+    public int getbonoAuxTx() {
+        return bonoAuxTx;
     }
 
 }

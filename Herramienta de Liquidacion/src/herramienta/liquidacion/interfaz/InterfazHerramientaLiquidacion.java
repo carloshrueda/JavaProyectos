@@ -537,30 +537,16 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         persona.setDiastrab(diaslab);
 
         //validar salario basico
-        String strsalbas = jftxtSalBas.getText();
-        strsalbas = strsalbas.trim();
-        if (strsalbas.isEmpty() || strsalbas == null) {
-            //Si es vacio
-            jftxtSalBas.requestFocus();
-            JOptionPane.showMessageDialog(null, "Salario básico inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //Quitar el signo $
-        if (strsalbas.charAt(0) == '$') {
-            strsalbas = strsalbas.substring(1);
-        }
-        if (!isNumeric(strsalbas)) {
-            //Si no es un numero
-            jftxtSalBas.requestFocus();
-            JOptionPane.showMessageDialog(null, "Salario básico inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int salbas = 0;
+        long salbas = 0;
         try {
-            salbas = Integer.parseInt(strsalbas);
+            salbas = (long ) jftxtSalBas.getValue();
         } catch (NumberFormatException ex) {
+            jftxtSalBas.requestFocus();
+            JOptionPane.showMessageDialog(null, "Salario básico inválido. \n"
+                + ex.getMessage(), "Herramienta de liquidación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (Exception ex) {
             jftxtSalBas.requestFocus();
             JOptionPane.showMessageDialog(null, "Salario básico inválido. \n"
                 + ex.getMessage(), "Herramienta de liquidación",
@@ -574,47 +560,34 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        persona.setSalbas(salbas);
+        persona.setSalbas((int)salbas);
 
         //validar auxilio de transporte
-        String strauxtx = jftxtAuxTx.getText();
-        strauxtx = strauxtx.trim();
-        if (strauxtx.isEmpty() || strauxtx == null) {
-            //Si es vacio
-            jftxtAuxTx.requestFocus();
-            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //Quitar el signo $
-        if (strauxtx.charAt(0) == '$') {
-            strauxtx = strauxtx.substring(1);
-        }
-        if (!isNumeric(strauxtx)) {
-            //Si no es un numero
-            jftxtAuxTx.requestFocus();
-            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int auxtx = 0;
+        long auxtx = 0;
         try {
-            auxtx = Integer.parseInt(strauxtx);
+            auxtx = (long ) jftxtAuxTx.getValue();
         } catch (NumberFormatException ex) {
             jftxtAuxTx.requestFocus();
             JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido. \n"
                 + ex.getMessage(), "Herramienta de liquidación",
                 JOptionPane.ERROR_MESSAGE);
             return;
+        } catch (Exception ex) {
+            jftxtAuxTx.requestFocus();
+            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido. \n"
+                + ex.getMessage(), "Herramienta de liquidación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        if (auxtx < 0) {
+        if (auxtx <= 0) {
             //Si es negativo
             jftxtAuxTx.requestFocus();
-            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
+            JOptionPane.showMessageDialog(null, "Salario básico inválido",
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        persona.setAuxtrans(auxtx);
+        persona.setAuxtrans((int)auxtx);
+        System.out.println("Auxilio de tx: " + persona.getAuxtrans());
 
         if (jrbtnLiquidacion.isSelected()) {
             //Validar Periodo Inicio
@@ -701,7 +674,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             if (jfrmComPagSalMen == null) {
                 jfrmComPagSalMen = new InterfazComprobantePagoSalarioMensual(persona);
             } else {
-                jfrmComPagSalMen.cargarFormulario(persona);
+                jfrmComPagSalMen.setPersona(persona);
+                jfrmComPagSalMen.cargarFormulario();
             }
             jfrmComPagSalMen.setAlwaysOnTop(true);
             jfrmComPagSalMen.setVisible(true);
@@ -725,21 +699,23 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     
     private void calcularSalDevengado() {
         //Calcula el salario devengado
+        int salbas = persona.getSalbas();
         int saldev = 0;
-        int bonoAuxTx = 0;
+        int bonoAuxTx = persona.getAuxtrans();
         int desEps = 0;
         int desPen = 0;
         int salNeto= 0;
+        int diasTrab= persona.getDiastrab();
         
-        if (persona.getDiastrab() < 30) {
-            saldev = persona.getSalbas() / 30 * persona.getDiastrab();
+        if (diasTrab < 30) {
+            saldev = salbas / 30 * diasTrab;
             if (saldev <= SALMINLEGAL * 2) {
-                bonoAuxTx = AUXTXLEGAL / 30 * persona.getDiastrab();
+                bonoAuxTx = bonoAuxTx / 30 * diasTrab;
             }
         } else {
-            saldev = persona.getSalbas();
+            saldev = salbas;
             if (saldev <= SALMINLEGAL * 2) {
-                bonoAuxTx = AUXTXLEGAL;
+                bonoAuxTx = bonoAuxTx;
             }
         }
         desEps = Math.round(saldev * 0.04f);

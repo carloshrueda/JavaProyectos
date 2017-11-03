@@ -689,6 +689,9 @@
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="$0"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="InterfazComprobantePagoSalarioMensual_jblEPS"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jblPension">
       <Properties>
@@ -767,6 +770,9 @@
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="$0"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="InterfazComprobantePagoSalarioMensual_jblSalNeto"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
