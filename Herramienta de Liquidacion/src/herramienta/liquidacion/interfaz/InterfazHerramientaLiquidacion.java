@@ -466,10 +466,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             jtxtPrimerNom.requestFocus();
             JOptionPane.showMessageDialog(null, "Nombre invalido", "", JOptionPane.ERROR_MESSAGE);
             return;
-        } else {
-            persona.setPrimNombre(strnombre);
-            
-        }
+        } 
+        persona.setPrimNombre(strnombre);
     }//GEN-LAST:event_jbtnCalcularActionPerformed
 
     private void limpiarFormulario() {
