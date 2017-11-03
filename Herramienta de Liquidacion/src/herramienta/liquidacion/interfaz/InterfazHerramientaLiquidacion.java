@@ -19,8 +19,10 @@ import java.util.Date;
 public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
     private Persona persona;
-    final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+    private final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
     private InterfazComprobantePagoSalarioMensual jfrmComPagSalMen;
+    private final int AUXTXLEGAL = 83140;
+    private final int SALMINLEGAL = 737717;
 
     /**
      * Creates new form InterfazHerramientaLiquidacion
@@ -525,7 +527,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if ((diaslab < 0) || (diaslab > 30)) {
+        if ((diaslab <= 0) || (diaslab > 30)) {
             //Si es negativo
             jftxtDiasLab.requestFocus();
             JOptionPane.showMessageDialog(null, "Día laborados inválidos",
@@ -565,7 +567,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (salbas < 0) {
+        if (salbas <= 0) {
             //Si es negativo
             jftxtDiasLab.requestFocus();
             JOptionPane.showMessageDialog(null, "Salario básico inválido",
@@ -691,18 +693,24 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             persona.setDiasperiodo(0);
         }
 
-        if (jfrmComPagSalMen == null) {
-            jfrmComPagSalMen = new InterfazComprobantePagoSalarioMensual(persona);
-        } else {
-            jfrmComPagSalMen.cargarFormulario(persona);
+        if (jrbtnSalario.isSelected()) {
+            //Si se seleccionó el tipo de calculo: Salario
+            //Calcular salario devengado
+            calcularSalDevengado();
+
+            if (jfrmComPagSalMen == null) {
+                jfrmComPagSalMen = new InterfazComprobantePagoSalarioMensual(persona);
+            } else {
+                jfrmComPagSalMen.cargarFormulario(persona);
+            }
+            jfrmComPagSalMen.setAlwaysOnTop(true);
+            jfrmComPagSalMen.setVisible(true);
         }
-        jfrmComPagSalMen.setAlwaysOnTop(true);
-        jfrmComPagSalMen.setVisible(true);
 
     }//GEN-LAST:event_jbtnCalcularActionPerformed
 
     private void jtxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFocusGained
-         ((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.YELLOW);
+        ((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.YELLOW);
     }//GEN-LAST:event_jtxtFocusGained
 
     private void jtxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFocusLost
@@ -712,6 +720,39 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     private void jftxtAuxTxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jftxtAuxTxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jftxtAuxTxActionPerformed
+
+    //*************** MIS METODOS **************
+    
+    private void calcularSalDevengado() {
+        //Calcula el salario devengado
+        int saldev = 0;
+        int bonoAuxTx = 0;
+        int desEps = 0;
+        int desPen = 0;
+        int salNeto= 0;
+        
+        if (persona.getDiastrab() < 30) {
+            saldev = persona.getSalbas() / 30 * persona.getDiastrab();
+            if (saldev <= SALMINLEGAL * 2) {
+                bonoAuxTx = AUXTXLEGAL / 30 * persona.getDiastrab();
+            }
+        } else {
+            saldev = persona.getSalbas();
+            if (saldev <= SALMINLEGAL * 2) {
+                bonoAuxTx = AUXTXLEGAL;
+            }
+        }
+        desEps = Math.round(saldev * 0.04f);
+        desPen = Math.round(saldev * 0.04f);
+        
+        salNeto= saldev - desEps - desPen + bonoAuxTx;
+
+        persona.setSaldevengado(saldev);
+        persona.setBonoAuxTx(bonoAuxTx);
+        persona.setDesEps(desEps);
+        persona.setDesPension(desPen);
+        persona.setSalneto(salNeto);
+    }
 
     public boolean isNumeric(String cadena) {
 

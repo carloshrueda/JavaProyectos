@@ -25,6 +25,11 @@ public class Persona {
     private Date perfin;
     private int auxtrans;
     private long diasperiodo;
+    private int saldevengado;
+    private int desEps;
+    private int desPension;
+    private int bonoAuxTx;
+    private int salneto;
 
     public Persona() {
         this.tipodoc = null;
@@ -38,9 +43,14 @@ public class Persona {
         this.perinicio = null;
         this.perfin = null;
         this.auxtrans = 0;
-        this.diasperiodo= 0;
+        this.diasperiodo = 0;
+        this.saldevengado = 0;
+        this.desEps = 0;
+        this.desPension = 0;
+        this.bonoAuxTx = 0;
+        this.salneto = 0;
     }
-    
+
     public Persona(Persona p) {
         this.tipodoc = p.tipodoc;
         this.primNombre = p.primNombre;
@@ -53,7 +63,12 @@ public class Persona {
         this.perinicio = p.perinicio;
         this.perfin = p.perfin;
         this.auxtrans = p.auxtrans;
-        this.diasperiodo= p.diasperiodo;
+        this.diasperiodo = p.diasperiodo;
+        this.saldevengado = p.saldevengado;
+        this.desEps = p.desEps;
+        this.desPension = p.desPension;
+        this.bonoAuxTx = p.bonoAuxTx;
+        this.bonoAuxTx= p.bonoAuxTx;
     }
 
     public TipoDocumento getTipodoc() {
@@ -143,7 +158,7 @@ public class Persona {
     public void setAuxtrans(int auxtrans) {
         this.auxtrans = auxtrans;
     }
-    
+
     public long getDiasperiodo() {
         return diasperiodo;
     }
@@ -151,4 +166,45 @@ public class Persona {
     public void setDiasperiodo(long diasperiodo) {
         this.diasperiodo = diasperiodo;
     }
+
+    public int getSaldevengado() {
+        return saldevengado;
+    }
+
+    public void setSaldevengado(int saldevengado) {
+        this.saldevengado = saldevengado;
+    }
+
+    public int getDesEps() {
+        return desEps;
+    }
+
+    public void setDesEps(int desEps) {
+        this.desEps = desEps;
+    }
+
+    public int getDesPension() {
+        return desPension;
+    }
+
+    public void setDesPension(int desPension) {
+        this.desPension = desPension;
+    }
+
+    public int getBonoAuxTx() {
+        return bonoAuxTx;
+    }
+
+    public void setBonoAuxTx(int bonoAuxTx) {
+        this.bonoAuxTx = bonoAuxTx;
+    }
+
+    public int getSalneto() {
+        return salneto;
+    }
+
+    public void setSalneto(int salneto) {
+        this.salneto = salneto;
+    }
+
 }
