@@ -542,14 +542,14 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             return;
         } catch (Exception ex) {
             jftxtSalBas.requestFocus();
-            JOptionPane.showMessageDialog(null, "Salario básico inválido. \n"
+            JOptionPane.showMessageDialog(null, "Error. Salario básico inválido. \n"
                 + ex.getMessage(), "Herramienta de liquidación",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (salbas <= 0) {
             //Si es negativo
-            jftxtDiasLab.requestFocus();
+            jftxtSalBas.requestFocus();
             JOptionPane.showMessageDialog(null, "Salario básico inválido",
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
@@ -568,7 +568,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             return;
         } catch (Exception ex) {
             jftxtAuxTx.requestFocus();
-            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido. \n"
+            JOptionPane.showMessageDialog(null, "Error. Auxilio de transporte inválido. \n"
                 + ex.getMessage(), "Herramienta de liquidación",
                 JOptionPane.ERROR_MESSAGE);
             return;
@@ -678,7 +678,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             //Si se seleccionó el tipo de calculo: Salario
             //Calcular de la liquidación
             persona.setDiastrab((int) persona.getDiasperiodo());
-            jftxtDiasLab.setValue(persona.getDiastrab());
+            jftxtDiasLab.setValue((long) persona.getDiastrab());
             calcularLiquidacion();
 
             //Muestra el formulario
@@ -796,9 +796,11 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         jtxtSegNombre.setText("");
         jtxtPrimerApel.setText("");
         jtxtSegApel.setText("");
-        jftxtDiasLab.setText("0");
-        jftxtSalBas.setText("$0");
-        jftxtAuxTx.setText("$0");
+        jftxtDiasLab.setValue((long) 0);
+        jftxtSalBas.setValue((long) 0);
+        jftxtAuxTx.setValue((long) 0);
+        //jftxtSalBas.setText("$0");
+        ///jftxtAuxTx.setText("$0");
         jtxtNumDoc.setText("");
         jfmtxtInicio.setText("");
         jfmtxtFin.setText("");
