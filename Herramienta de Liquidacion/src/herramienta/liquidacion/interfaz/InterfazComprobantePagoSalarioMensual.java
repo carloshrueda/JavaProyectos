@@ -372,6 +372,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         jblAuxTx.setText("$0");
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel1.setOpaque(false);
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(0, 51, 204));

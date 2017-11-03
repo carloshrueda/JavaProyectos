@@ -29,24 +29,35 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
      */
     public InterfazComprobantePagoIndemnizacion() {
         initComponents();
-        this.getContentPane().setBackground(new java.awt.Color(255,220,76));
+        this.getContentPane().setBackground(new java.awt.Color(255, 220, 76));
 
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
         btngrpTipoDocumento.add(jrbtnCE);
+
+        setVisibleSegLinea(false);
 
         persona = new Persona();
     }
 
     public InterfazComprobantePagoIndemnizacion(Persona p) {
         initComponents();
-        this.getContentPane().setBackground(new java.awt.Color(255,220,76));
+        this.getContentPane().setBackground(new java.awt.Color(255, 220, 76));
+
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
         btngrpTipoDocumento.add(jrbtnCE);
 
+        setVisibleSegLinea(false);
+
         persona = new Persona(p);
         cargarFormulario();
+    }
+
+    public void setVisibleSegLinea(boolean visible) {
+        jLabel15.setVisible(visible);
+        jLabel22.setVisible(visible);
+        jblIndAno2.setVisible(visible);
     }
 
     /**
@@ -94,11 +105,11 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jblsaldeven = new javax.swing.JLabel();
-        jblEPS = new javax.swing.JLabel();
+        jblIndano1 = new javax.swing.JLabel();
+        jblIndAno2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
-        jblSalNeto = new javax.swing.JLabel();
+        jblIndemnizacion = new javax.swing.JLabel();
         jbltextopie = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -336,24 +347,25 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
         jLabel22.setText("Indemnización Segundo Año en adelante");
         jLabel22.setToolTipText("");
 
-        jblsaldeven.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jblsaldeven.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jblsaldeven.setText("$0");
+        jblIndano1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jblIndano1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jblIndano1.setText("$0");
 
-        jblEPS.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jblEPS.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jblEPS.setText("$0");
+        jblIndAno2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jblIndAno2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jblIndAno2.setText("$0");
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel1.setOpaque(false);
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(0, 51, 204));
         jLabel29.setText("Total a pagar");
 
-        jblSalNeto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jblSalNeto.setForeground(new java.awt.Color(0, 51, 204));
-        jblSalNeto.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jblSalNeto.setText("$0");
+        jblIndemnizacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jblIndemnizacion.setForeground(new java.awt.Color(0, 51, 204));
+        jblIndemnizacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jblIndemnizacion.setText("$0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -363,7 +375,7 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel29)
                 .addGap(157, 157, 157)
-                .addComponent(jblSalNeto, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(jblIndemnizacion, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
@@ -371,7 +383,7 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29)
-                    .addComponent(jblSalNeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jblIndemnizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
@@ -438,8 +450,8 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
                                             .addComponent(jLabel22))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jblsaldeven, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jblEPS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(jblIndano1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jblIndAno2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jftxtAuxTx, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12))))
@@ -521,12 +533,12 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel21)
-                    .addComponent(jblsaldeven))
+                    .addComponent(jblIndano1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jLabel22)
-                    .addComponent(jblEPS))
+                    .addComponent(jblIndAno2))
                 .addGap(53, 53, 53)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
@@ -575,10 +587,10 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
     }
 
     public void cargarFormulario() {
-        if (this.persona.getTipodoc() == TipoDocumento.CC){
+        if (this.persona.getTipodoc() == TipoDocumento.CC) {
             jrbtnCC.setSelected(true);
         } else {
-           jrbtnCE.setSelected(true); 
+            jrbtnCE.setSelected(true);
         }
 
         jtxtPrimerNom.setText(this.persona.getPrimNombre());
@@ -597,9 +609,13 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
             jfmtxtInicio.setText("");
             jfmtxtFin.setText("");
         }
-        jblsaldeven.setText(String.valueOf(this.persona.getPrima()));
-        jblEPS.setText(String.valueOf(this.persona.getCesantias()));
-        jblSalNeto.setText(String.valueOf(this.persona.getLiquidacion()));
+        jblIndano1.setText(String.valueOf(this.persona.getIndano1()));
+        jblIndAno2.setText(String.valueOf(this.persona.getIndano2()));
+        jblIndemnizacion.setText(String.valueOf(this.persona.getIndemnizacion()));
+
+        int diasperiodo = (int) persona.getDiasperiodo();
+        int anosperiodo = Math.round(diasperiodo / 360.0f);
+        setVisibleSegLinea(anosperiodo > 1);
     }
 
     public void setPersona(Persona p) {
@@ -673,9 +689,9 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel jblEPS;
-    private javax.swing.JLabel jblSalNeto;
-    private javax.swing.JLabel jblsaldeven;
+    private javax.swing.JLabel jblIndAno2;
+    private javax.swing.JLabel jblIndano1;
+    private javax.swing.JLabel jblIndemnizacion;
     private javax.swing.JLabel jbltextopie;
     private javax.swing.JButton jbtnImprimir;
     private javax.swing.JButton jbtnSalir;

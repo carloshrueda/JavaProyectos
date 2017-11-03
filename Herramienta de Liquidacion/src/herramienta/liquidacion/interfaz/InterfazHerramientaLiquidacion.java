@@ -582,9 +582,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             return;
         }
         persona.setAuxtrans((int) auxtx);
-        System.out.println("Auxilio de tx: " + persona.getAuxtrans());
 
-        if (jrbtnLiquidacion.isSelected()) {
+        if (jrbtnLiquidacion.isSelected() || jrbtnIndenmizacion.isSelected()) {
             //Validar Periodo Inicio
             String strperini = jfmtxtInicio.getText();
             strperini = strperini.trim();
@@ -696,7 +695,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             //Calcular de la Indemnizacion
             persona.setDiastrab((int) persona.getDiasperiodo());
             jftxtDiasLab.setValue((long) persona.getDiastrab());
-            //calcularIndemnizacion();
+            calcularIndemnizacion();
 
             //Muestra el formulario
             if (jfrmComPagIndemnizacion == null) {
@@ -724,6 +723,38 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jftxtAuxTxActionPerformed
 
     //*************** MIS METODOS **************
+    private void calcularIndemnizacion() {
+        int diasperiodo = (int) persona.getDiasperiodo();
+        int anosperiodo = Math.round(diasperiodo / 360.0f);
+        int salbas = persona.getSalbas();
+        int ano1 = 0;
+        int ano2 = 0;
+        int totIndemnizacion = 0;
+
+        if (salbas < (10 * SALMINLEGAL)) {
+            ano1 = salbas;  //1er ano 30 dias salario basico
+            if (anosperiodo > 1) {
+                int salano2= Math.round(salbas / 30.0f * 20.0f); //20 dias de salario por cada ano
+                for(int i=2; i<=anosperiodo; i++) {
+                    ano2 = ano2 + salano2;
+                }
+            }
+        } else {
+            ano1 = Math.round(salbas / 30.0f * 20.0f); //20 dias de salario basico
+            if (anosperiodo > 1) {
+                int salano2= salbas / 30 * 15; //15 dias de salario por cada ano
+                for(int i=2; i<=anosperiodo; i++) {
+                    ano2 = ano2 + salano2;
+                }
+            }
+        }
+        totIndemnizacion = ano1 + ano2;
+        
+        persona.setIndano1(ano1);
+        persona.setIndano2(ano2);
+        persona.setIndemnizacion(totIndemnizacion);
+    }
+
     private void calcularLiquidacion() {
         int diasperiodo = (int) persona.getDiasperiodo();
         int salbas = persona.getSalbas();

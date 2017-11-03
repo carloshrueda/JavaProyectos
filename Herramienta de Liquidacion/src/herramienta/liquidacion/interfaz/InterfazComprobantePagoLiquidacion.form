@@ -717,6 +717,7 @@
             <LineBorder roundedCorners="true"/>
           </Border>
         </Property>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
 
       <Layout>

@@ -35,6 +35,9 @@ public class Persona {
     private int vacaciones;
     private int intcesantias;
     private int liquidacion;
+    private int indano1; //indemnizacion primer ano
+    private int indano2; //indemnizacion segundo ano
+    private int indemnizacion;
 
     public Persona() {
         this.tipodoc = null;
@@ -59,6 +62,9 @@ public class Persona {
         this.vacaciones = 0;
         this.intcesantias = 0;
         this.liquidacion = 0;
+        this.indano1 = 0;
+        this.indano2 = 0;
+        this.indemnizacion = 0;
     }
 
     public Persona(Persona p) {
@@ -84,6 +90,9 @@ public class Persona {
         this.vacaciones = p.getVacaciones();
         this.intcesantias = p.getIntcesantias();
         this.liquidacion = p.getLiquidacion();
+        this.indano1 = p.getIndano1();
+        this.indano2 = p.getIndano2();
+        this.indemnizacion = p.getIndemnizacion();
     }
 
     public TipoDocumento getTipodoc() {
@@ -264,6 +273,30 @@ public class Persona {
 
     public void setLiquidacion(int liquidacion) {
         this.liquidacion = liquidacion;
+    }
+
+    public int getIndano1() {
+        return indano1;
+    }
+
+    public void setIndano1(int indano1) {
+        this.indano1 = indano1;
+    }
+
+    public int getIndano2() {
+        return indano2;
+    }
+
+    public void setIndano2(int indano2) {
+        this.indano2 = indano2;
+    }
+
+    public int getIndemnizacion() {
+        return indemnizacion;
+    }
+
+    public void setIndemnizacion(int indemnizacion) {
+        this.indemnizacion = indemnizacion;
     }
 
 }
