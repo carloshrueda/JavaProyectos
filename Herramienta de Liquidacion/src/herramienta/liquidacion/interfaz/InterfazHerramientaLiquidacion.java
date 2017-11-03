@@ -16,6 +16,9 @@ import javax.swing.JOptionPane;
 import java.time.format.*;
 
 import herramienta.liquidacion.mundo.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -198,7 +201,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         jLabel19.setText("Periodo liquidado");
 
         jfmtxtInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
-        jfmtxtInicio.setToolTipText("dd-mes-yyyy");
+        jfmtxtInicio.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtInicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jfmtxtInicio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -210,7 +213,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         });
 
         jfmtxtFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
-        jfmtxtFin.setToolTipText("dd-mes-yyyy");
+        jfmtxtFin.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtFin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jfmtxtFin.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -262,6 +265,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
         jftxtSalBas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0"))));
         jftxtSalBas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jftxtSalBas.setToolTipText("i.e.: $747000");
         jftxtSalBas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jftxtSalBas.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -274,6 +278,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
         jftxtAuxTx.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0"))));
         jftxtAuxTx.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jftxtAuxTx.setToolTipText("i.e.: $54000");
         jftxtAuxTx.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jftxtAuxTx.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -286,6 +291,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
         jftxtDiasLab.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##"))));
         jftxtDiasLab.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jftxtDiasLab.setToolTipText("i.e.: 15");
         jftxtDiasLab.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jftxtDiasLab.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -550,8 +556,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             return;
         }
         //Quitar el signo $
-        if (strsalbas.charAt(0)=='$') {
-            strsalbas= strsalbas.substring(1);
+        if (strsalbas.charAt(0) == '$') {
+            strsalbas = strsalbas.substring(1);
         }
         if (!isNumeric(strsalbas)) {
             //Si no es un numero
@@ -590,8 +596,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             return;
         }
         //Quitar el signo $
-        if (strauxtx.charAt(0)=='$') {
-            strauxtx= strauxtx.substring(1);
+        if (strauxtx.charAt(0) == '$') {
+            strauxtx = strauxtx.substring(1);
         }
         if (!isNumeric(strauxtx)) {
             //Si no es un numero
@@ -618,13 +624,64 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             return;
         }
         persona.setAuxtrans(auxtx);
-        
+
         //Validar Periodo Inicio
-        
+        String strperini = jfmtxtInicio.getText();
+        strperini = strperini.trim();
+        if (strperini.isEmpty() || strperini == null) {
+            //Si es vacio
+            jfmtxtInicio.requestFocus();
+            JOptionPane.showMessageDialog(null, "Fecha de periodo de inicio inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        SimpleDateFormat formatdate = new SimpleDateFormat("dd-MMM-yyyy");
+        Date dateini;
+        try {
+            dateini = formatdate.parse(strperini);
+        } catch (ParseException ex) {
+            jfmtxtFin.requestFocus();
+            JOptionPane.showMessageDialog(null, 
+                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (Exception ex) {
+            jfmtxtFin.requestFocus();
+            JOptionPane.showMessageDialog(null, 
+                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         //Validar Periodo Fin
+        String strperfin = jfmtxtFin.getText();
+        strperfin = strperini.trim();
+        if (strperfin.isEmpty() || strperfin == null) {
+            //Si es vacio
+            jfmtxtFin.requestFocus();
+            JOptionPane.showMessageDialog(null, "Fecha de periodo de inicio inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Date datefin;
+        try {
+            datefin = formatdate.parse(strperfin);
+        } catch (ParseException ex) {
+            jfmtxtFin.requestFocus();
+            JOptionPane.showMessageDialog(null, 
+                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (Exception ex) {
+            jfmtxtFin.requestFocus();
+            JOptionPane.showMessageDialog(null, 
+                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
+
         //Validar Period Fin > Inicio
-        
         //Asignar Periodo Incio y Fin
     }//GEN-LAST:event_jbtnCalcularActionPerformed
 
@@ -633,7 +690,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         boolean resultado;
 
         try {
-            
+
             Integer.parseInt(cadena);
             resultado = true;
         } catch (NumberFormatException excepcion) {
