@@ -38,6 +38,22 @@ public class Persona {
         this.perinicio = null;
         this.perfin = null;
         this.auxtrans = 0;
+        this.diasperiodo= 0;
+    }
+    
+    public Persona(Persona p) {
+        this.tipodoc = p.tipodoc;
+        this.primNombre = p.primNombre;
+        this.segNombre = p.segNombre;
+        this.primApel = p.primApel;
+        this.segApel = p.segApel;
+        this.diastrab = p.diastrab;
+        this.salbas = p.salbas;
+        this.numdoc = p.numdoc;
+        this.perinicio = p.perinicio;
+        this.perfin = p.perfin;
+        this.auxtrans = p.auxtrans;
+        this.diasperiodo= p.diasperiodo;
     }
 
     public TipoDocumento getTipodoc() {

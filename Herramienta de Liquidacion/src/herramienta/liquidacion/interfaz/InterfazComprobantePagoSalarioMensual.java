@@ -12,6 +12,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,7 +29,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
      */
     public InterfazComprobantePagoSalarioMensual() {
         initComponents();
-        this.getContentPane().setBackground(java.awt.Color.LIGHT_GRAY);
+        this.getContentPane().setBackground(new java.awt.Color(255,255,204));
 
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
@@ -39,8 +41,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
 
     public InterfazComprobantePagoSalarioMensual(Persona p) {
         initComponents();
-        this.getContentPane().setBackground(java.awt.Color.LIGHT_GRAY);
-
+        this.getContentPane().setBackground(new java.awt.Color(255,255,204));
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
         btngrpTipoDocumento.add(jrbtnCE);
@@ -108,7 +109,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         jbltextopie = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Herramienta de liquidación");
+        setTitle("Comprobante pago salario mensual");
         setBackground(new java.awt.Color(255, 255, 204));
         setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         setResizable(false);
@@ -584,255 +585,20 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFocusGained
-        ((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.YELLOW);
+        //((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.YELLOW);
     }//GEN-LAST:event_jtxtFocusGained
 
     private void jtxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFocusLost
-
-        ((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.WHITE);
+        //((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.WHITE);
     }//GEN-LAST:event_jtxtFocusLost
 
     private void jbtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalirActionPerformed
-        System.exit(0);
+        //this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_jbtnSalirActionPerformed
 
     private void jbtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimirActionPerformed
-        //Asignar el tipo de documento a la persona
-        if (jrbtnCC.isSelected()) {
-            persona.setTipodoc(TipoDocumento.CC);
-        } else {
-            persona.setTipodoc(TipoDocumento.CE);
-        }
-
-        //Validar el primer nombre
-        String strnombre = jtxtPrimerNom.getText();
-        strnombre = strnombre.trim();
-        if (strnombre.isEmpty()) {
-            jtxtPrimerNom.requestFocus();
-            JOptionPane.showMessageDialog(null, "Nombre invalido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        persona.setPrimNombre(strnombre);
-
-        //Validar el segundo nombre. Si es vacio no importa
-        String strsegnombre = jtxtSegNombre.getText();
-        strsegnombre = strsegnombre.trim();
-        persona.setSegNombre(strsegnombre);
-
-        //Validar el primer apellido
-        String strapel = jtxtPrimerApel.getText();
-        strapel = strnombre.trim();
-        if (strnombre.isEmpty()) {
-            jtxtPrimerApel.requestFocus();
-            JOptionPane.showMessageDialog(null, "Primer Apellido invalido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        persona.setPrimApel(strapel);
-
-        //Validar el segundo Apellido. Si es vacio no importa
-        String strsegapel = jtxtSegApel.getText();
-        strsegapel = strsegapel.trim();
-        persona.setSegApel(strsegapel);
-
-        //Validar el numero de documento
-        String strnumdoc = jtxtNumDoc.getText();
-        strnumdoc = strnumdoc.trim();
-        if (strnumdoc.isEmpty()) {
-            jtxtNumDoc.requestFocus();
-            JOptionPane.showMessageDialog(null, "Número de documento inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        persona.setNumdoc(strnumdoc);
-
-        //validar dias laborados
-        String strdiaslab = jftxtDiasLab.getText();
-        strdiaslab = strdiaslab.trim();
-        if (strnumdoc.isEmpty() || strnumdoc == null) {
-            //Si es vacio
-            jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!isNumeric(strdiaslab)) {
-            //Si no es un numero
-            jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int diaslab = 0;
-        try {
-            diaslab = Integer.parseInt(strdiaslab);
-        } catch (NumberFormatException ex) {
-            jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Día laborados inválidos. \n"
-                + ex.getMessage(), "Herramienta de liquidación",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (diaslab < 0) {
-            //Si es negativo
-            jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        persona.setDiastrab(diaslab);
-
-        //validar salario basico
-        String strsalbas = jftxtSalBas.getText();
-        strsalbas = strsalbas.trim();
-        if (strsalbas.isEmpty() || strsalbas == null) {
-            //Si es vacio
-            jftxtSalBas.requestFocus();
-            JOptionPane.showMessageDialog(null, "Salario básico inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //Quitar el signo $
-        if (strsalbas.charAt(0) == '$') {
-            strsalbas = strsalbas.substring(1);
-        }
-        if (!isNumeric(strsalbas)) {
-            //Si no es un numero
-            jftxtSalBas.requestFocus();
-            JOptionPane.showMessageDialog(null, "Salario básico inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int salbas = 0;
-        try {
-            salbas = Integer.parseInt(strsalbas);
-        } catch (NumberFormatException ex) {
-            jftxtSalBas.requestFocus();
-            JOptionPane.showMessageDialog(null, "Salario básico inválido. \n"
-                + ex.getMessage(), "Herramienta de liquidación",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (salbas < 0) {
-            //Si es negativo
-            jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Salario básico inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        persona.setSalbas(salbas);
-
-        //validar auxilio de transporte
-        String strauxtx = jftxtAuxTx.getText();
-        strauxtx = strauxtx.trim();
-        if (strauxtx.isEmpty() || strauxtx == null) {
-            //Si es vacio
-            jftxtAuxTx.requestFocus();
-            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //Quitar el signo $
-        if (strauxtx.charAt(0) == '$') {
-            strauxtx = strauxtx.substring(1);
-        }
-        if (!isNumeric(strauxtx)) {
-            //Si no es un numero
-            jftxtAuxTx.requestFocus();
-            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int auxtx = 0;
-        try {
-            auxtx = Integer.parseInt(strauxtx);
-        } catch (NumberFormatException ex) {
-            jftxtAuxTx.requestFocus();
-            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido. \n"
-                + ex.getMessage(), "Herramienta de liquidación",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (auxtx < 0) {
-            //Si es negativo
-            jftxtAuxTx.requestFocus();
-            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        persona.setAuxtrans(auxtx);
-
-        //Validar Periodo Inicio
-        String strperini = jfmtxtInicio.getText();
-        strperini = strperini.trim();
-        if (strperini.isEmpty() || strperini == null) {
-            //Si es vacio
-            jfmtxtInicio.requestFocus();
-            JOptionPane.showMessageDialog(null, "Fecha de periodo de inicio inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        SimpleDateFormat formatdate = new SimpleDateFormat("dd-MMM-yyyy");
-        Date dateini;
-        try {
-            dateini = formatdate.parse(strperini);
-        } catch (ParseException ex) {
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null,
-                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (Exception ex) {
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null,
-                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        //Validar Periodo Fin
-        String strperfin = jfmtxtFin.getText();
-        strperfin = strperfin.trim();
-        if (strperfin.isEmpty() || strperfin == null) {
-            //Si es vacio
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, "Fecha de periodo de inicio inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        Date datefin;
-        try {
-            datefin = formatdate.parse(strperfin);
-        } catch (ParseException ex) {
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null,
-                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (Exception ex) {
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null,
-                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        //Validar Period Fin > Inicio
-        if (datefin.before(dateini)) {
-            //Fecha de fin menor a fecha ini
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null,
-                "Fecha de fin de periodo debe ser mayor o igual a la fecha de inicio de periodo",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        persona.setPerfin(dateini);
-        persona.setPerfin(datefin);
-
-        //Asignar Periodo Incio y Fin
-        long diasperiodo = (datefin.getTime() - dateini.getTime()) / MILLSECS_PER_DAY;
-        persona.setDiasperiodo(diasperiodo);
+        
     }//GEN-LAST:event_jbtnImprimirActionPerformed
 
     public boolean isNumeric(String cadena) {
@@ -850,7 +616,27 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         return resultado;
     }
 
-    private void cargarFormulario() {
+    public void cargarFormulario() {
+        jrbtnCC.setSelected(this.persona.getTipodoc() == TipoDocumento.CC);
+        jtxtPrimerNom.setText(this.persona.getPrimNombre());
+        jtxtSegNombre.setText(this.persona.getSegNombre());
+        jtxtPrimerApel.setText(this.persona.getPrimApel());
+        jtxtSegApel.setText(this.persona.getSegApel());
+        jftxtDiasLab.setText(String.valueOf(this.persona.getDiastrab()));
+        jftxtSalBas.setText("$" + String.valueOf(this.persona.getSalbas()));
+        jftxtAuxTx.setText("$" + String.valueOf(this.persona.getAuxtrans()));
+        jtxtNumDoc.setText(this.persona.getNumdoc());
+        if (this.persona.getPerinicio() != null) {
+            DateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
+            jfmtxtInicio.setText(df.format(this.persona.getPerinicio()));
+            jfmtxtFin.setText(df.format(this.persona.getPerfin()));
+        } else {
+            jfmtxtInicio.setText("");
+            jfmtxtFin.setText("");
+        }
+    }
+    
+    public void cargarFormulario(Persona persona) {
         jrbtnCC.setSelected(persona.getTipodoc() == TipoDocumento.CC);
         jtxtPrimerNom.setText(persona.getPrimNombre());
         jtxtSegNombre.setText(persona.getSegNombre());
@@ -860,9 +646,14 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         jftxtSalBas.setText("$" + String.valueOf(persona.getSalbas()));
         jftxtAuxTx.setText("$" + String.valueOf(persona.getAuxtrans()));
         jtxtNumDoc.setText(persona.getNumdoc());
-        DateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
-        jfmtxtInicio.setText(df.format(persona.getPerinicio()));
-        jfmtxtFin.setText(df.format(persona.getPerfin()));
+        if (persona.getPerinicio() != null) {
+            DateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
+            jfmtxtInicio.setText(df.format(persona.getPerinicio()));
+            jfmtxtFin.setText(df.format(persona.getPerfin()));
+        } else {
+            jfmtxtInicio.setText("");
+            jfmtxtFin.setText("");
+        }
     }
 
     /**

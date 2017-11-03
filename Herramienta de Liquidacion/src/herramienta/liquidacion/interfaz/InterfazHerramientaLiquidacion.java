@@ -283,6 +283,11 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 jtxtFocusLost(evt);
             }
         });
+        jftxtAuxTx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jftxtAuxTxActionPerformed(evt);
+            }
+        });
 
         jftxtDiasLab.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##"))));
         jftxtDiasLab.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -434,15 +439,6 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFocusGained
-        ((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.YELLOW);
-    }//GEN-LAST:event_jtxtFocusGained
-
-    private void jtxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFocusLost
-
-        ((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.WHITE);
-    }//GEN-LAST:event_jtxtFocusLost
-
     private void jbtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jbtnSalirActionPerformed
@@ -477,7 +473,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
         //Validar el primer apellido
         String strapel = jtxtPrimerApel.getText();
-        strapel = strnombre.trim();
+        strapel = strapel.trim();
         if (strnombre.isEmpty()) {
             jtxtPrimerApel.requestFocus();
             JOptionPane.showMessageDialog(null, "Primer Apellido invalido",
@@ -529,7 +525,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (diaslab < 0) {
+        if ((diaslab < 0) || (diaslab > 30)) {
             //Si es negativo
             jftxtDiasLab.requestFocus();
             JOptionPane.showMessageDialog(null, "Día laborados inválidos",
@@ -618,81 +614,104 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         }
         persona.setAuxtrans(auxtx);
 
-        //Validar Periodo Inicio
-        String strperini = jfmtxtInicio.getText();
-        strperini = strperini.trim();
-        if (strperini.isEmpty() || strperini == null) {
-            //Si es vacio
-            jfmtxtInicio.requestFocus();
-            JOptionPane.showMessageDialog(null, "Fecha de periodo de inicio inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        SimpleDateFormat formatdate = new SimpleDateFormat("dd-MMM-yyyy");
-        Date dateini;
-        try {
-            dateini = formatdate.parse(strperini);
-        } catch (ParseException ex) {
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
-                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (Exception ex) {
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
-                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
+        if (jrbtnLiquidacion.isSelected()) {
+            //Validar Periodo Inicio
+            String strperini = jfmtxtInicio.getText();
+            strperini = strperini.trim();
+            if (strperini.isEmpty() || strperini == null) {
+                //Si es vacio
+                jfmtxtInicio.requestFocus();
+                JOptionPane.showMessageDialog(null, "Fecha de periodo de inicio inválido",
+                    "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            SimpleDateFormat formatdate = new SimpleDateFormat("dd-MMM-yyyy");
+            Date dateini;
+            try {
+                dateini = formatdate.parse(strperini);
+            } catch (ParseException ex) {
+                jfmtxtFin.requestFocus();
+                JOptionPane.showMessageDialog(null,
+                    "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
+                    "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (Exception ex) {
+                jfmtxtFin.requestFocus();
+                JOptionPane.showMessageDialog(null,
+                    "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
+                    "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //Validar Periodo Fin
+            String strperfin = jfmtxtFin.getText();
+            strperfin = strperfin.trim();
+            if (strperfin.isEmpty() || strperfin == null) {
+                //Si es vacio
+                jfmtxtFin.requestFocus();
+                JOptionPane.showMessageDialog(null, "Fecha de periodo de inicio inválido",
+                    "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Date datefin;
+            try {
+                datefin = formatdate.parse(strperfin);
+            } catch (ParseException ex) {
+                jfmtxtFin.requestFocus();
+                JOptionPane.showMessageDialog(null,
+                    "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
+                    "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (Exception ex) {
+                jfmtxtFin.requestFocus();
+                JOptionPane.showMessageDialog(null,
+                    "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
+                    "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //Validar Period Fin > Inicio
+            if (datefin.before(dateini)) {
+                //Fecha de fin menor a fecha ini
+                jfmtxtFin.requestFocus();
+                JOptionPane.showMessageDialog(null,
+                    "Fecha de fin de periodo debe ser mayor o igual a la fecha de inicio de periodo",
+                    "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            persona.setPerinicio(dateini);
+            persona.setPerfin(datefin);
+
+            //Asignar Periodo Incio y Fin
+            long diasperiodo = (datefin.getTime() - dateini.getTime()) / MILLSECS_PER_DAY;
+            persona.setDiasperiodo(diasperiodo);
+        } else {
+            persona.setPerinicio(null);
+            persona.setPerfin(null);
+            persona.setDiasperiodo(0);
         }
 
-        //Validar Periodo Fin
-        String strperfin = jfmtxtFin.getText();
-        strperfin = strperfin.trim();
-        if (strperfin.isEmpty() || strperfin == null) {
-            //Si es vacio
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, "Fecha de periodo de inicio inválido",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
+        if (jfrmComPagSalMen == null) {
+            jfrmComPagSalMen = new InterfazComprobantePagoSalarioMensual(persona);
+        } else {
+            jfrmComPagSalMen.cargarFormulario(persona);
         }
-        Date datefin;
-        try {
-            datefin = formatdate.parse(strperfin);
-        } catch (ParseException ex) {
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
-                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (Exception ex) {
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
-                "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        jfrmComPagSalMen.setAlwaysOnTop(true);
+        jfrmComPagSalMen.setVisible(true);
 
-        //Validar Period Fin > Inicio
-        if (datefin.before(dateini)) {
-            //Fecha de fin menor a fecha ini
-            jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
-                "Fecha de fin de periodo debe ser mayor o igual a la fecha de inicio de periodo",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        } 
-        persona.setPerfin(dateini);
-        persona.setPerfin(datefin);
-        
-        //Asignar Periodo Incio y Fin
-        long diasperiodo= ( datefin.getTime() - dateini.getTime() ) / MILLSECS_PER_DAY;
-        persona.setDiasperiodo(diasperiodo);
-        
-        jfrmComPagSalMen = new InterfazComprobantePagoSalarioMensual(persona);
-        jfrmComPagSalMen.setVisible(rootPaneCheckingEnabled);
-        
     }//GEN-LAST:event_jbtnCalcularActionPerformed
+
+    private void jtxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFocusGained
+         ((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.YELLOW);
+    }//GEN-LAST:event_jtxtFocusGained
+
+    private void jtxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFocusLost
+        ((javax.swing.JTextField) evt.getComponent()).setBackground(java.awt.Color.WHITE);
+    }//GEN-LAST:event_jtxtFocusLost
+
+    private void jftxtAuxTxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jftxtAuxTxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jftxtAuxTxActionPerformed
 
     public boolean isNumeric(String cadena) {
 
