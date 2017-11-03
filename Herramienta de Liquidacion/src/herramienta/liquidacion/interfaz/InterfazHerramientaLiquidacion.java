@@ -27,6 +27,7 @@ import java.util.Date;
 public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
     private Persona persona;
+    final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
 
     /**
      * Creates new form InterfazHerramientaLiquidacion
@@ -655,7 +656,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
         //Validar Periodo Fin
         String strperfin = jfmtxtFin.getText();
-        strperfin = strperini.trim();
+        strperfin = strperfin.trim();
         if (strperfin.isEmpty() || strperfin == null) {
             //Si es vacio
             jfmtxtFin.requestFocus();
@@ -679,10 +680,23 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
 
         //Validar Period Fin > Inicio
+        if (datefin.before(dateini)) {
+            //Fecha de fin menor a fecha ini
+            jfmtxtFin.requestFocus();
+            JOptionPane.showMessageDialog(null, 
+                "Fecha de fin de periodo debe ser mayor o igual a la fecha de inicio de periodo",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        persona.setPerfin(dateini);
+        persona.setPerfin(datefin);
+        
         //Asignar Periodo Incio y Fin
+        long diasperiodo= ( datefin.getTime() - dateini.getTime() ) / MILLSECS_PER_DAY;
+        JOptionPane.showMessageDialog(null, "dias periodo: " + diasperiodo);
+        persona.setDiasperiodo(diasperiodo);
     }//GEN-LAST:event_jbtnCalcularActionPerformed
 
     public boolean isNumeric(String cadena) {

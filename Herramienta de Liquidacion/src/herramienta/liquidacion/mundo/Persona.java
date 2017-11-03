@@ -24,7 +24,7 @@ public class Persona {
     private Date perinicio;
     private Date perfin;
     private int auxtrans;
-    private TipoCalculo tipocalc;
+    private long diasperiodo;
 
     public Persona() {
         this.tipodoc = null;
@@ -38,7 +38,6 @@ public class Persona {
         this.perinicio = null;
         this.perfin = null;
         this.auxtrans = 0;
-        this.tipocalc = null;
     }
 
     public TipoDocumento getTipodoc() {
@@ -128,13 +127,12 @@ public class Persona {
     public void setAuxtrans(int auxtrans) {
         this.auxtrans = auxtrans;
     }
-
-    public TipoCalculo getTipocalc() {
-        return tipocalc;
+    
+    public long getDiasperiodo() {
+        return diasperiodo;
     }
 
-    public void setTipocalc(TipoCalculo tipocalc) {
-        this.tipocalc = tipocalc;
+    public void setDiasperiodo(long diasperiodo) {
+        this.diasperiodo = diasperiodo;
     }
-
 }
