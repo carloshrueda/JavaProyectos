@@ -20,9 +20,11 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
     private Persona persona;
     private final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-    private InterfazComprobantePagoSalarioMensual jfrmComPagSalMen;
     private final int AUXTXLEGAL = 83140;
     private final int SALMINLEGAL = 737717;
+    
+    private InterfazComprobantePagoSalarioMensual jfrmComPagSalMen;
+    private InterfazComprobantePagoLiquidacion jfrmComPagLiquidacion;
 
     /**
      * Creates new form InterfazHerramientaLiquidacion
@@ -671,6 +673,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             //Calcular salario devengado
             calcularSalDevengado();
 
+            //Muestra el formulario
             if (jfrmComPagSalMen == null) {
                 jfrmComPagSalMen = new InterfazComprobantePagoSalarioMensual(persona);
             } else {
@@ -679,6 +682,21 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
             jfrmComPagSalMen.setAlwaysOnTop(true);
             jfrmComPagSalMen.setVisible(true);
+        } 
+        else if (jrbtnLiquidacion.isSelected()) {
+            //Si se seleccionó el tipo de calculo: Salario
+            //Calcular de la liquidación
+            calcularLiquidacion();
+
+            //Muestra el formulario
+            if (jfrmComPagLiquidacion == null) {
+                jfrmComPagLiquidacion = new InterfazComprobantePagoLiquidacion(persona);
+            } else {
+                jfrmComPagLiquidacion.setPersona(persona);
+                jfrmComPagLiquidacion.cargarFormulario();
+            }
+            jfrmComPagLiquidacion.setAlwaysOnTop(true);
+            jfrmComPagLiquidacion.setVisible(true);
         }
 
     }//GEN-LAST:event_jbtnCalcularActionPerformed
@@ -696,6 +714,10 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jftxtAuxTxActionPerformed
 
     //*************** MIS METODOS **************
+    
+    private void calcularLiquidacion() {
+        
+    }
     
     private void calcularSalDevengado() {
         //Calcula el salario devengado

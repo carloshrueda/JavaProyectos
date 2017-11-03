@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author CRUEDA
  */
-public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
+public class InterfazComprobantePagoLiquidacion extends javax.swing.JFrame {
 
     private Persona persona;
     final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -27,9 +27,9 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
     /**
      * Creates new form InterfazHerramientaLiquidacion
      */
-    public InterfazComprobantePagoSalarioMensual() {
+    public InterfazComprobantePagoLiquidacion() {
         initComponents();
-        this.getContentPane().setBackground(new java.awt.Color(255, 255, 204));
+        this.getContentPane().setBackground(new java.awt.Color(204,255,204));
 
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
@@ -38,9 +38,9 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         persona = new Persona();
     }
 
-    public InterfazComprobantePagoSalarioMensual(Persona p) {
+    public InterfazComprobantePagoLiquidacion(Persona p) {
         initComponents();
-        this.getContentPane().setBackground(new java.awt.Color(255, 255, 204));
+        this.getContentPane().setBackground(new java.awt.Color(204,255,20));
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
         btngrpTipoDocumento.add(jrbtnCE);
@@ -108,13 +108,13 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         jbltextopie = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Comprobante pago salario mensual");
-        setBackground(new java.awt.Color(255, 255, 204));
+        setTitle("Comprobante pago Liquidación");
+        setBackground(new java.awt.Color(204, 255, 204));
         setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Comprobante Pago Salario Mensual");
+        jLabel1.setText("Comprobante Pago Liquidación");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Tipo de documento");
@@ -331,25 +331,25 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         jLabel10.setText("+");
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel15.setText("-");
+        jLabel15.setText("+");
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel17.setText("-");
+        jLabel17.setText("+");
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel20.setText("+");
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel21.setText("Salario básico devengado");
+        jLabel21.setText("Prima");
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel22.setText("Descuento aportes Salud 4%");
+        jLabel22.setText("Cesantias");
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel23.setText("Descuento aportes Pensión 4%");
+        jLabel23.setText("Vacaciones");
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel24.setText("Auxilio de transporte");
+        jLabel24.setText("Intereses de las Cesantias");
 
         jblsaldeven.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jblsaldeven.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -463,9 +463,9 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
                                             .addComponent(jLabel22)
                                             .addComponent(jLabel23)
                                             .addComponent(jLabel24))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jblsaldeven, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                            .addComponent(jblsaldeven, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                                             .addComponent(jblEPS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jblPension, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jblAuxTx, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -621,6 +621,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         } else {
            jrbtnCE.setSelected(true); 
         }
+
         jtxtPrimerNom.setText(this.persona.getPrimNombre());
         jtxtSegNombre.setText(this.persona.getSegNombre());
         jtxtPrimerApel.setText(this.persona.getPrimApel());
@@ -665,21 +666,23 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfazComprobantePagoSalarioMensual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazComprobantePagoLiquidacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfazComprobantePagoSalarioMensual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazComprobantePagoLiquidacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfazComprobantePagoSalarioMensual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazComprobantePagoLiquidacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfazComprobantePagoSalarioMensual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazComprobantePagoLiquidacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfazComprobantePagoSalarioMensual().setVisible(true);
+                new InterfazComprobantePagoLiquidacion().setVisible(true);
             }
         });
     }
