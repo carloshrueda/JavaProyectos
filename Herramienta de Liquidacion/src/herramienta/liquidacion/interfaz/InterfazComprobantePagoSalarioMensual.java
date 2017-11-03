@@ -231,6 +231,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         jfmtxtInicio.setEditable(false);
         jfmtxtInicio.setBackground(new java.awt.Color(255, 255, 255));
         jfmtxtInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
+        jfmtxtInicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jfmtxtInicio.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtInicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jfmtxtInicio.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -245,6 +246,7 @@ public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
         jfmtxtFin.setEditable(false);
         jfmtxtFin.setBackground(new java.awt.Color(255, 255, 255));
         jfmtxtFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
+        jfmtxtFin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jfmtxtFin.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtFin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jfmtxtFin.addFocusListener(new java.awt.event.FocusAdapter() {

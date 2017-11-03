@@ -231,6 +231,7 @@ public class InterfazComprobantePagoLiquidacion extends javax.swing.JFrame {
         jfmtxtInicio.setEditable(false);
         jfmtxtInicio.setBackground(new java.awt.Color(255, 255, 255));
         jfmtxtInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
+        jfmtxtInicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jfmtxtInicio.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtInicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jfmtxtInicio.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -245,6 +246,7 @@ public class InterfazComprobantePagoLiquidacion extends javax.swing.JFrame {
         jfmtxtFin.setEditable(false);
         jfmtxtFin.setBackground(new java.awt.Color(255, 255, 255));
         jfmtxtFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
+        jfmtxtFin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jfmtxtFin.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtFin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jfmtxtFin.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -638,11 +640,11 @@ public class InterfazComprobantePagoLiquidacion extends javax.swing.JFrame {
             jfmtxtInicio.setText("");
             jfmtxtFin.setText("");
         }
-        jblsaldeven.setText(String.valueOf(this.persona.getSaldevengado()));
-        jblEPS.setText(String.valueOf(this.persona.getDesEps()));
-        jblPension.setText(String.valueOf(this.persona.getDesPension()));
-        jblAuxTx.setText(String.valueOf(this.persona.getBonoAuxTx()));
-        jblSalNeto.setText(String.valueOf(this.persona.getSalneto()));
+        jblsaldeven.setText(String.valueOf(this.persona.getPrima()));
+        jblEPS.setText(String.valueOf(this.persona.getCesantias()));
+        jblPension.setText(String.valueOf(this.persona.getVacaciones()));
+        jblAuxTx.setText(String.valueOf(this.persona.getIntcesantias()));
+        jblSalNeto.setText(String.valueOf(this.persona.getLiquidacion()));
     }
 
     public void setPersona(Persona p) {

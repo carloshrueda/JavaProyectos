@@ -30,6 +30,11 @@ public class Persona {
     private int desPension;
     private int bonoAuxTx;
     private int salneto;
+    private int prima;
+    private int cesantias;
+    private int vacaciones;
+    private int intcesantias;
+    private int liquidacion;
 
     public Persona() {
         this.tipodoc = null;
@@ -49,6 +54,11 @@ public class Persona {
         this.desPension = 0;
         this.bonoAuxTx = 0;
         this.salneto = 0;
+        this.prima = 0;
+        this.cesantias = 0;
+        this.vacaciones = 0;
+        this.intcesantias = 0;
+        this.liquidacion = 0;
     }
 
     public Persona(Persona p) {
@@ -69,6 +79,11 @@ public class Persona {
         this.desPension = p.desPension;
         this.bonoAuxTx = p.bonoAuxTx;
         this.salneto = p.salneto;
+        this.prima = p.getPrima();
+        this.cesantias = p.getCesantias();
+        this.vacaciones = p.getVacaciones();
+        this.intcesantias = p.getIntcesantias();
+        this.liquidacion = p.getLiquidacion();
     }
 
     public TipoDocumento getTipodoc() {
@@ -206,9 +221,49 @@ public class Persona {
     public void setSalneto(int salneto) {
         this.salneto = salneto;
     }
-    
+
     public int getbonoAuxTx() {
         return bonoAuxTx;
+    }
+
+    public int getPrima() {
+        return prima;
+    }
+
+    public void setPrima(int prima) {
+        this.prima = prima;
+    }
+
+    public int getCesantias() {
+        return cesantias;
+    }
+
+    public void setCesantias(int cesantias) {
+        this.cesantias = cesantias;
+    }
+
+    public int getVacaciones() {
+        return vacaciones;
+    }
+
+    public void setVacaciones(int vacaciones) {
+        this.vacaciones = vacaciones;
+    }
+
+    public int getIntcesantias() {
+        return intcesantias;
+    }
+
+    public void setIntcesantias(int intcesantias) {
+        this.intcesantias = intcesantias;
+    }
+
+    public int getLiquidacion() {
+        return liquidacion;
+    }
+
+    public void setLiquidacion(int liquidacion) {
+        this.liquidacion = liquidacion;
     }
 
 }

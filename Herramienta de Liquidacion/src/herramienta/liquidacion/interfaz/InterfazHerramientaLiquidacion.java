@@ -22,7 +22,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     private final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
     private final int AUXTXLEGAL = 83140;
     private final int SALMINLEGAL = 737717;
-    
+
     private InterfazComprobantePagoSalarioMensual jfrmComPagSalMen;
     private InterfazComprobantePagoLiquidacion jfrmComPagLiquidacion;
 
@@ -200,6 +200,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         jLabel19.setText("Periodo liquidado");
 
         jfmtxtInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
+        jfmtxtInicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jfmtxtInicio.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtInicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jfmtxtInicio.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -212,6 +213,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         });
 
         jfmtxtFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
+        jfmtxtFin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jfmtxtFin.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtFin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jfmtxtFin.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -503,45 +505,35 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         persona.setNumdoc(strnumdoc);
 
         //validar dias laborados
-        String strdiaslab = jftxtDiasLab.getText();
-        strdiaslab = strdiaslab.trim();
-        if (strnumdoc.isEmpty() || strnumdoc == null) {
-            //Si es vacio
-            jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!isNumeric(strdiaslab)) {
-            //Si no es un numero
-            jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
-                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int diaslab = 0;
+        long diaslab = 0;
         try {
-            diaslab = Integer.parseInt(strdiaslab);
+            diaslab = (long) jftxtDiasLab.getValue();
         } catch (NumberFormatException ex) {
             jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Día laborados inválidos. \n"
+            JOptionPane.showMessageDialog(null, "Días laborados inválido. \n"
+                + ex.getMessage(), "Herramienta de liquidación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (Exception ex) {
+            jftxtDiasLab.requestFocus();
+            JOptionPane.showMessageDialog(null, "Error. Días laborados inválido. \n"
                 + ex.getMessage(), "Herramienta de liquidación",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if ((diaslab <= 0) || (diaslab > 30)) {
-            //Si es negativo
+        if (jrbtnSalario.isSelected() && ((diaslab <= 0) || (diaslab > 30))) {
+            //Si es calculo de salario y los dias son mayores a 30
             jftxtDiasLab.requestFocus();
-            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
+            JOptionPane.showMessageDialog(null, "Días laborados inválidos",
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        persona.setDiastrab(diaslab);
+        persona.setDiastrab((int) diaslab);
 
         //validar salario basico
         long salbas = 0;
         try {
-            salbas = (long ) jftxtSalBas.getValue();
+            salbas = (long) jftxtSalBas.getValue();
         } catch (NumberFormatException ex) {
             jftxtSalBas.requestFocus();
             JOptionPane.showMessageDialog(null, "Salario básico inválido. \n"
@@ -562,12 +554,12 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        persona.setSalbas((int)salbas);
+        persona.setSalbas((int) salbas);
 
         //validar auxilio de transporte
         long auxtx = 0;
         try {
-            auxtx = (long ) jftxtAuxTx.getValue();
+            auxtx = (long) jftxtAuxTx.getValue();
         } catch (NumberFormatException ex) {
             jftxtAuxTx.requestFocus();
             JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido. \n"
@@ -588,7 +580,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        persona.setAuxtrans((int)auxtx);
+        persona.setAuxtrans((int) auxtx);
         System.out.println("Auxilio de tx: " + persona.getAuxtrans());
 
         if (jrbtnLiquidacion.isSelected()) {
@@ -682,10 +674,11 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
             jfrmComPagSalMen.setAlwaysOnTop(true);
             jfrmComPagSalMen.setVisible(true);
-        } 
-        else if (jrbtnLiquidacion.isSelected()) {
+        } else if (jrbtnLiquidacion.isSelected()) {
             //Si se seleccionó el tipo de calculo: Salario
             //Calcular de la liquidación
+            persona.setDiastrab((int) persona.getDiasperiodo());
+            jftxtDiasLab.setValue(persona.getDiastrab());
             calcularLiquidacion();
 
             //Muestra el formulario
@@ -714,11 +707,40 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jftxtAuxTxActionPerformed
 
     //*************** MIS METODOS **************
-    
     private void calcularLiquidacion() {
-        
+        int diasperiodo = (int) persona.getDiasperiodo();
+        int salbas = persona.getSalbas();
+        int bonoAuxTx = persona.getAuxtrans();
+        int saldev = 0;
+        int prima = 0;
+        int cesantias = 0;
+        int vacaciones = 0;
+        int intcesantias = 0;
+        int nummeslab = 0;
+        int totLiquidacion = 0;
+
+        if (saldev > SALMINLEGAL * 2) {
+            bonoAuxTx = 0;
+        }
+        saldev = salbas + bonoAuxTx;
+
+        prima = Math.round(saldev / 360.0f * diasperiodo);
+        persona.setPrima(prima);
+
+        cesantias = Math.round(saldev / 360.0f * diasperiodo);
+        persona.setCesantias(cesantias);
+
+        vacaciones = Math.round(salbas / 720.0f * diasperiodo);
+        persona.setVacaciones(vacaciones);
+
+        nummeslab = Math.round(diasperiodo / 30.0f);
+        intcesantias = Math.round(cesantias * (0.01f * nummeslab));
+        persona.setIntcesantias(intcesantias);
+
+        totLiquidacion = prima + cesantias + vacaciones + intcesantias;
+        persona.setLiquidacion(totLiquidacion);
     }
-    
+
     private void calcularSalDevengado() {
         //Calcula el salario devengado
         int salbas = persona.getSalbas();
@@ -726,9 +748,9 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         int bonoAuxTx = persona.getAuxtrans();
         int desEps = 0;
         int desPen = 0;
-        int salNeto= 0;
-        int diasTrab= persona.getDiastrab();
-        
+        int salNeto = 0;
+        int diasTrab = persona.getDiastrab();
+
         if (diasTrab < 30) {
             saldev = salbas / 30 * diasTrab;
             if (saldev <= SALMINLEGAL * 2) {
@@ -736,14 +758,14 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         } else {
             saldev = salbas;
-            if (saldev <= SALMINLEGAL * 2) {
-                bonoAuxTx = bonoAuxTx;
+            if (saldev > SALMINLEGAL * 2) {
+                bonoAuxTx = 0;
             }
         }
         desEps = Math.round(saldev * 0.04f);
         desPen = Math.round(saldev * 0.04f);
-        
-        salNeto= saldev - desEps - desPen + bonoAuxTx;
+
+        salNeto = saldev - desEps - desPen + bonoAuxTx;
 
         persona.setSaldevengado(saldev);
         persona.setBonoAuxTx(bonoAuxTx);
