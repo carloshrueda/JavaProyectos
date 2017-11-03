@@ -8,6 +8,7 @@ package herramienta.liquidacion.interfaz;
 import javax.swing.JOptionPane;
 
 import herramienta.liquidacion.mundo.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,16 +17,15 @@ import java.util.Date;
  *
  * @author CRUEDA
  */
-public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
+public class InterfazComprobantePagoSalarioMensual extends javax.swing.JFrame {
 
     private Persona persona;
     final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-    private InterfazComprobantePagoSalarioMensual jfrmComPagSalMen;
 
     /**
      * Creates new form InterfazHerramientaLiquidacion
      */
-    public InterfazHerramientaLiquidacion() {
+    public InterfazComprobantePagoSalarioMensual() {
         initComponents();
         this.getContentPane().setBackground(java.awt.Color.LIGHT_GRAY);
 
@@ -33,14 +33,20 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         btngrpTipoDocumento.add(jrbtnCC);
         btngrpTipoDocumento.add(jrbtnCE);
 
-        //Se agregan los botones de Salario, liquidación e Indenmización 
-        //al botongroup
-        btngrpTipoCalculo.add(jrbtnSalario);
-        btngrpTipoCalculo.add(jrbtnLiquidacion);
-        btngrpTipoCalculo.add(jrbtnIndenmizacion);
-
         persona = new Persona();
-        limpiarFormulario();
+        cargarFormulario();
+    }
+
+    public InterfazComprobantePagoSalarioMensual(Persona p) {
+        initComponents();
+        this.getContentPane().setBackground(java.awt.Color.LIGHT_GRAY);
+
+        //Se agregan los botones de C.C. y C.E. al botongroup
+        btngrpTipoDocumento.add(jrbtnCC);
+        btngrpTipoDocumento.add(jrbtnCE);
+
+        persona = new Persona(p);
+        cargarFormulario();
     }
 
     /**
@@ -77,29 +83,44 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jfmtxtInicio = new javax.swing.JFormattedTextField();
         jfmtxtFin = new javax.swing.JFormattedTextField();
-        jrbtnSalario = new javax.swing.JRadioButton();
-        jrbtnLiquidacion = new javax.swing.JRadioButton();
-        jrbtnIndenmizacion = new javax.swing.JRadioButton();
-        jbtnCalcular = new javax.swing.JButton();
-        jbtnLimpiar = new javax.swing.JButton();
+        jbtnImprimir = new javax.swing.JButton();
         jbtnSalir = new javax.swing.JButton();
         jftxtSalBas = new javax.swing.JFormattedTextField();
         jftxtAuxTx = new javax.swing.JFormattedTextField();
         jftxtDiasLab = new javax.swing.JFormattedTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jblsaldeven = new javax.swing.JLabel();
+        jblEPS = new javax.swing.JLabel();
+        jblPension = new javax.swing.JLabel();
+        jblAuxTx = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jbltextopie = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Herramienta de liquidación");
-        setBackground(java.awt.Color.lightGray);
+        setBackground(new java.awt.Color(255, 255, 204));
+        setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Herramienta de Liquidación");
+        jLabel1.setText("Comprobante Pago Salario Mensual");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Tipo de documento");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("Tipo de cálculo");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Operación");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Primer nombre");
@@ -130,10 +151,14 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
         jrbtnCC.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jrbtnCC.setText("C.C.");
+        jrbtnCC.setEnabled(false);
 
         jrbtnCE.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jrbtnCE.setText("C.E");
+        jrbtnCE.setEnabled(false);
 
+        jtxtNumDoc.setEditable(false);
+        jtxtNumDoc.setBackground(new java.awt.Color(255, 255, 255));
         jtxtNumDoc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jtxtNumDoc.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jtxtNumDoc.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -145,6 +170,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jtxtPrimerNom.setEditable(false);
+        jtxtPrimerNom.setBackground(new java.awt.Color(255, 255, 255));
         jtxtPrimerNom.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jtxtPrimerNom.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtxtPrimerNom.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -156,6 +183,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jtxtSegNombre.setEditable(false);
+        jtxtSegNombre.setBackground(new java.awt.Color(255, 255, 255));
         jtxtSegNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jtxtSegNombre.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtxtSegNombre.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -167,6 +196,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jtxtPrimerApel.setEditable(false);
+        jtxtPrimerApel.setBackground(new java.awt.Color(255, 255, 255));
         jtxtPrimerApel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jtxtPrimerApel.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtxtPrimerApel.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -178,6 +209,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jtxtSegApel.setEditable(false);
+        jtxtSegApel.setBackground(new java.awt.Color(255, 255, 255));
         jtxtSegApel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jtxtSegApel.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtxtSegApel.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -195,6 +228,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel19.setText("Periodo liquidado");
 
+        jfmtxtInicio.setEditable(false);
+        jfmtxtInicio.setBackground(new java.awt.Color(255, 255, 255));
         jfmtxtInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
         jfmtxtInicio.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtInicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -207,6 +242,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jfmtxtFin.setEditable(false);
+        jfmtxtFin.setBackground(new java.awt.Color(255, 255, 255));
         jfmtxtFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MMM-yyyy"))));
         jfmtxtFin.setToolTipText("dd-mes-yyyy (i.e.: 12-may-2017)");
         jfmtxtFin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -219,32 +256,13 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
-        jrbtnSalario.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jrbtnSalario.setText("Salario");
-
-        jrbtnLiquidacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jrbtnLiquidacion.setText("Liquidación");
-
-        jrbtnIndenmizacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jrbtnIndenmizacion.setText("Indemnización");
-
-        jbtnCalcular.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jbtnCalcular.setMnemonic('C');
-        jbtnCalcular.setText("Calcular");
-        jbtnCalcular.setToolTipText("Calcula el salario");
-        jbtnCalcular.addActionListener(new java.awt.event.ActionListener() {
+        jbtnImprimir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jbtnImprimir.setMnemonic('C');
+        jbtnImprimir.setText("Imprimir");
+        jbtnImprimir.setToolTipText("Calcula el salario");
+        jbtnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnCalcularActionPerformed(evt);
-            }
-        });
-
-        jbtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jbtnLimpiar.setMnemonic('l');
-        jbtnLimpiar.setText("Limpiar");
-        jbtnLimpiar.setToolTipText("Limpia el formulario");
-        jbtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnLimpiarActionPerformed(evt);
+                jbtnImprimirActionPerformed(evt);
             }
         });
 
@@ -258,6 +276,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jftxtSalBas.setEditable(false);
+        jftxtSalBas.setBackground(new java.awt.Color(255, 255, 255));
         jftxtSalBas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0"))));
         jftxtSalBas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jftxtSalBas.setToolTipText("i.e.: $747000");
@@ -271,6 +291,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jftxtAuxTx.setEditable(false);
+        jftxtAuxTx.setBackground(new java.awt.Color(255, 255, 255));
         jftxtAuxTx.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0"))));
         jftxtAuxTx.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jftxtAuxTx.setToolTipText("i.e.: $54000");
@@ -284,6 +306,8 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jftxtDiasLab.setEditable(false);
+        jftxtDiasLab.setBackground(new java.awt.Color(255, 255, 255));
         jftxtDiasLab.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##"))));
         jftxtDiasLab.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jftxtDiasLab.setToolTipText("i.e.: 15");
@@ -297,6 +321,87 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Item");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Valor");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setText("+");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel15.setText("-");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel17.setText("-");
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel20.setText("+");
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel21.setText("Salario básico devengado");
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel22.setText("Descuento aportes Salud 4%");
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel23.setText("Descuento aportes Pensión 4%");
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel24.setText("Auxilio de transporte");
+
+        jblsaldeven.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jblsaldeven.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jblsaldeven.setText("$0");
+
+        jblEPS.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jblEPS.setForeground(new java.awt.Color(255, 102, 102));
+        jblEPS.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jblEPS.setText("$0");
+
+        jblPension.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jblPension.setForeground(new java.awt.Color(255, 102, 102));
+        jblPension.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jblPension.setText("$0");
+
+        jblAuxTx.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jblAuxTx.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jblAuxTx.setText("$0");
+
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel29.setText("Total a pagar");
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel30.setText("$0");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel29)
+                .addGap(157, 157, 157)
+                .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
+        );
+
+        jbltextopie.setText("Fecha de liquidación: 03 de Febrero de 2017 - Liquidado por Fabio Atuesta Osorio");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -304,76 +409,98 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtxtPrimerNom, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtxtSegNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtxtPrimerApel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtxtSegApel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jfmtxtFin, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jfmtxtInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19)
-                            .addComponent(jtxtNumDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jrbtnIndenmizacion, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jrbtnSalario)
-                                        .addGap(61, 61, 61)
-                                        .addComponent(jrbtnLiquidacion)
-                                        .addGap(159, 159, 159))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jtxtPrimerNom, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtxtSegNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtxtPrimerApel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtxtSegApel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(28, 28, 28)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                            .addComponent(jfmtxtFin, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jfmtxtInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel19)
+                                            .addComponent(jtxtNumDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel14)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(151, 151, 151)
+                                        .addComponent(jLabel6)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jftxtDiasLab, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(82, 82, 82)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel8)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel18)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jftxtSalBas, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel9))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jftxtDiasLab, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(19, 19, 19)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel21)
+                                            .addComponent(jLabel22)
+                                            .addComponent(jLabel23)
+                                            .addComponent(jLabel24))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jblsaldeven, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                            .addComponent(jblEPS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jblPension, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jblAuxTx, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jftxtSalBas, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jftxtAuxTx, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 12, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jftxtAuxTx, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addComponent(jLabel2)
                         .addGap(33, 33, 33)
                         .addComponent(jrbtnCC)
                         .addGap(18, 18, 18)
-                        .addComponent(jrbtnCE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addComponent(jbtnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122)
-                .addComponent(jbtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
-                .addComponent(jbtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jrbtnCE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel20))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(75, 75, 75))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(307, 307, 307)
+                                .addComponent(jbtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49)))
+                        .addComponent(jbltextopie))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,18 +543,40 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                     .addComponent(jftxtSalBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jftxtAuxTx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jftxtDiasLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jrbtnSalario)
-                    .addComponent(jrbtnLiquidacion)
-                    .addComponent(jrbtnIndenmizacion))
-                .addGap(32, 32, 32)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel21)
+                    .addComponent(jblsaldeven))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel22)
+                    .addComponent(jblEPS))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel23)
+                    .addComponent(jblPension))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel24)
+                    .addComponent(jblAuxTx))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(jbltextopie)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnCalcular)
-                    .addComponent(jbtnLimpiar)
+                    .addComponent(jbtnImprimir)
                     .addComponent(jbtnSalir))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -447,11 +596,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jbtnSalirActionPerformed
 
-    private void jbtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLimpiarActionPerformed
-        limpiarFormulario();
-    }//GEN-LAST:event_jbtnLimpiarActionPerformed
-
-    private void jbtnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCalcularActionPerformed
+    private void jbtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimirActionPerformed
         //Asignar el tipo de documento a la persona
         if (jrbtnCC.isSelected()) {
             persona.setTipodoc(TipoDocumento.CC);
@@ -634,13 +779,13 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             dateini = formatdate.parse(strperini);
         } catch (ParseException ex) {
             jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                 "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
         } catch (Exception ex) {
             jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                 "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
@@ -661,13 +806,13 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             datefin = formatdate.parse(strperfin);
         } catch (ParseException ex) {
             jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                 "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
         } catch (Exception ex) {
             jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                 "Fecha de periodo de inicio inválido\n" + ex.getMessage(),
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
@@ -677,22 +822,18 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         if (datefin.before(dateini)) {
             //Fecha de fin menor a fecha ini
             jfmtxtFin.requestFocus();
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                 "Fecha de fin de periodo debe ser mayor o igual a la fecha de inicio de periodo",
                 "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
-        } 
+        }
         persona.setPerfin(dateini);
         persona.setPerfin(datefin);
-        
+
         //Asignar Periodo Incio y Fin
-        long diasperiodo= ( datefin.getTime() - dateini.getTime() ) / MILLSECS_PER_DAY;
+        long diasperiodo = (datefin.getTime() - dateini.getTime()) / MILLSECS_PER_DAY;
         persona.setDiasperiodo(diasperiodo);
-        
-        jfrmComPagSalMen = new InterfazComprobantePagoSalarioMensual(persona);
-        jfrmComPagSalMen.setVisible(rootPaneCheckingEnabled);
-        
-    }//GEN-LAST:event_jbtnCalcularActionPerformed
+    }//GEN-LAST:event_jbtnImprimirActionPerformed
 
     public boolean isNumeric(String cadena) {
 
@@ -709,19 +850,19 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
         return resultado;
     }
 
-    private void limpiarFormulario() {
-        jrbtnCC.setSelected(true);
-        jrbtnSalario.setSelected(true);
-        jtxtPrimerNom.setText("");
-        jtxtSegNombre.setText("");
-        jtxtPrimerApel.setText("");
-        jtxtSegApel.setText("");
-        jftxtDiasLab.setText("0");
-        jftxtSalBas.setText("$0");
-        jftxtAuxTx.setText("$0");
-        jtxtNumDoc.setText("");
-        jfmtxtInicio.setText("");
-        jfmtxtFin.setText("");
+    private void cargarFormulario() {
+        jrbtnCC.setSelected(persona.getTipodoc() == TipoDocumento.CC);
+        jtxtPrimerNom.setText(persona.getPrimNombre());
+        jtxtSegNombre.setText(persona.getSegNombre());
+        jtxtPrimerApel.setText(persona.getPrimApel());
+        jtxtSegApel.setText(persona.getSegApel());
+        jftxtDiasLab.setText(String.valueOf(persona.getDiastrab()));
+        jftxtSalBas.setText("$" + String.valueOf(persona.getSalbas()));
+        jftxtAuxTx.setText("$" + String.valueOf(persona.getAuxtrans()));
+        jtxtNumDoc.setText(persona.getNumdoc());
+        DateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
+        jfmtxtInicio.setText(df.format(persona.getPerinicio()));
+        jfmtxtFin.setText(df.format(persona.getPerfin()));
     }
 
     /**
@@ -741,20 +882,21 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfazHerramientaLiquidacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazComprobantePagoSalarioMensual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfazHerramientaLiquidacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazComprobantePagoSalarioMensual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfazHerramientaLiquidacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazComprobantePagoSalarioMensual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfazHerramientaLiquidacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazComprobantePagoSalarioMensual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfazHerramientaLiquidacion().setVisible(true);
+                new InterfazComprobantePagoSalarioMensual().setVisible(true);
             }
         });
     }
@@ -763,21 +905,38 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btngrpTipoCalculo;
     private javax.swing.ButtonGroup btngrpTipoDocumento;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JButton jbtnCalcular;
-    private javax.swing.JButton jbtnLimpiar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jblAuxTx;
+    private javax.swing.JLabel jblEPS;
+    private javax.swing.JLabel jblPension;
+    private javax.swing.JLabel jblsaldeven;
+    private javax.swing.JLabel jbltextopie;
+    private javax.swing.JButton jbtnImprimir;
     private javax.swing.JButton jbtnSalir;
     private javax.swing.JFormattedTextField jfmtxtFin;
     private javax.swing.JFormattedTextField jfmtxtInicio;
@@ -786,9 +945,6 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jftxtSalBas;
     private javax.swing.JRadioButton jrbtnCC;
     private javax.swing.JRadioButton jrbtnCE;
-    private javax.swing.JRadioButton jrbtnIndenmizacion;
-    private javax.swing.JRadioButton jrbtnLiquidacion;
-    private javax.swing.JRadioButton jrbtnSalario;
     private javax.swing.JTextField jtxtNumDoc;
     private javax.swing.JTextField jtxtPrimerApel;
     private javax.swing.JTextField jtxtPrimerNom;
