@@ -22,6 +22,7 @@ import herramienta.liquidacion.mundo.*;
  * @author CRUEDA
  */
 public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
+
     private Persona persona;
 
     /**
@@ -259,7 +260,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
-        jftxtSalBas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        jftxtSalBas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0"))));
         jftxtSalBas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jftxtSalBas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jftxtSalBas.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -271,7 +272,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
         });
 
-        jftxtAuxTx.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        jftxtAuxTx.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0"))));
         jftxtAuxTx.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jftxtAuxTx.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jftxtAuxTx.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -450,25 +451,197 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnLimpiarActionPerformed
 
     private void jbtnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCalcularActionPerformed
-        persona= new Persona();
-        
+        persona = new Persona();
+
         //Asignar el tipo de documento a la persona
         if (jrbtnCC.isSelected()) {
             persona.setTipodoc(TipoDocumento.CC);
         } else {
             persona.setTipodoc(TipoDocumento.CE);
         }
-        
+
         //Validar el primer nombre
         String strnombre = jtxtPrimerNom.getText();
         strnombre = strnombre.trim();
         if (strnombre.isEmpty()) {
             jtxtPrimerNom.requestFocus();
-            JOptionPane.showMessageDialog(null, "Nombre invalido", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nombre invalido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
             return;
-        } 
+        }
         persona.setPrimNombre(strnombre);
+
+        //Validar el segundo nombre. Si es vacio no importa
+        String strsegnombre = jtxtSegNombre.getText();
+        strsegnombre = strsegnombre.trim();
+        persona.setSegNombre(strsegnombre);
+
+        //Validar el primer apellido
+        String strapel = jtxtPrimerApel.getText();
+        strapel = strnombre.trim();
+        if (strnombre.isEmpty()) {
+            jtxtPrimerApel.requestFocus();
+            JOptionPane.showMessageDialog(null, "Primer Apellido invalido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        persona.setPrimApel(strapel);
+
+        //Validar el segundo Apellido. Si es vacio no importa
+        String strsegapel = jtxtSegApel.getText();
+        strsegapel = strsegapel.trim();
+        persona.setSegApel(strsegapel);
+
+        //Validar el numero de documento
+        String strnumdoc = jtxtNumDoc.getText();
+        strnumdoc = strnumdoc.trim();
+        if (strnumdoc.isEmpty()) {
+            jtxtNumDoc.requestFocus();
+            JOptionPane.showMessageDialog(null, "Número de documento inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        persona.setNumdoc(strnumdoc);
+
+        //validar dias laborados
+        String strdiaslab = jftxtDiasLab.getText();
+        strdiaslab = strdiaslab.trim();
+        if (strnumdoc.isEmpty() || strnumdoc == null) {
+            //Si es vacio
+            jftxtDiasLab.requestFocus();
+            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!isNumeric(strdiaslab)) {
+            //Si no es un numero
+            jftxtDiasLab.requestFocus();
+            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int diaslab = 0;
+        try {
+            diaslab = Integer.parseInt(strdiaslab);
+        } catch (NumberFormatException ex) {
+            jftxtDiasLab.requestFocus();
+            JOptionPane.showMessageDialog(null, "Día laborados inválidos. \n"
+                + ex.getMessage(), "Herramienta de liquidación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (diaslab < 0) {
+            //Si es negativo
+            jftxtDiasLab.requestFocus();
+            JOptionPane.showMessageDialog(null, "Día laborados inválidos",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        persona.setDiastrab(diaslab);
+
+        //validar salario basico
+        String strsalbas = jftxtSalBas.getText();
+        strsalbas = strsalbas.trim();
+        if (strsalbas.isEmpty() || strsalbas == null) {
+            //Si es vacio
+            jftxtSalBas.requestFocus();
+            JOptionPane.showMessageDialog(null, "Salario básico inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //Quitar el signo $
+        if (strsalbas.charAt(0)=='$') {
+            strsalbas= strsalbas.substring(1);
+        }
+        if (!isNumeric(strsalbas)) {
+            //Si no es un numero
+            jftxtSalBas.requestFocus();
+            JOptionPane.showMessageDialog(null, "Salario básico inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int salbas = 0;
+        try {
+            salbas = Integer.parseInt(strsalbas);
+        } catch (NumberFormatException ex) {
+            jftxtSalBas.requestFocus();
+            JOptionPane.showMessageDialog(null, "Salario básico inválido. \n"
+                + ex.getMessage(), "Herramienta de liquidación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (salbas < 0) {
+            //Si es negativo
+            jftxtDiasLab.requestFocus();
+            JOptionPane.showMessageDialog(null, "Salario básico inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        persona.setSalbas(salbas);
+
+        //validar auxilio de transporte
+        String strauxtx = jftxtAuxTx.getText();
+        strauxtx = strauxtx.trim();
+        if (strauxtx.isEmpty() || strauxtx == null) {
+            //Si es vacio
+            jftxtAuxTx.requestFocus();
+            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //Quitar el signo $
+        if (strauxtx.charAt(0)=='$') {
+            strauxtx= strauxtx.substring(1);
+        }
+        if (!isNumeric(strauxtx)) {
+            //Si no es un numero
+            jftxtAuxTx.requestFocus();
+            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int auxtx = 0;
+        try {
+            auxtx = Integer.parseInt(strauxtx);
+        } catch (NumberFormatException ex) {
+            jftxtAuxTx.requestFocus();
+            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido. \n"
+                + ex.getMessage(), "Herramienta de liquidación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (auxtx < 0) {
+            //Si es negativo
+            jftxtAuxTx.requestFocus();
+            JOptionPane.showMessageDialog(null, "Auxilio de transporte inválido",
+                "Herramienta de liquidación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        persona.setAuxtrans(auxtx);
+        
+        //Validar Periodo Inicio
+        
+        //Validar Periodo Fin
+        
+        //Validar Period Fin > Inicio
+        
+        //Asignar Periodo Incio y Fin
     }//GEN-LAST:event_jbtnCalcularActionPerformed
+
+    public boolean isNumeric(String cadena) {
+
+        boolean resultado;
+
+        try {
+            
+            Integer.parseInt(cadena);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+
+        return resultado;
+    }
 
     private void limpiarFormulario() {
         jrbtnCC.setSelected(true);
