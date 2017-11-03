@@ -29,7 +29,7 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
      */
     public InterfazComprobantePagoIndemnizacion() {
         initComponents();
-        this.getContentPane().setBackground(new java.awt.Color(204,255,204));
+        this.getContentPane().setBackground(new java.awt.Color(255,220,76));
 
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
@@ -40,7 +40,7 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
 
     public InterfazComprobantePagoIndemnizacion(Persona p) {
         initComponents();
-        this.getContentPane().setBackground(new java.awt.Color(204,255,20));
+        this.getContentPane().setBackground(new java.awt.Color(255,220,76));
         //Se agregan los botones de C.C. y C.E. al botongroup
         btngrpTipoDocumento.add(jrbtnCC);
         btngrpTipoDocumento.add(jrbtnCE);
@@ -92,16 +92,10 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         jblsaldeven = new javax.swing.JLabel();
         jblEPS = new javax.swing.JLabel();
-        jblPension = new javax.swing.JLabel();
-        jblAuxTx = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jblSalNeto = new javax.swing.JLabel();
@@ -109,7 +103,7 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Comprobante pago Liquidación");
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(255, 220, 76));
         setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         setResizable(false);
 
@@ -335,41 +329,20 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("+");
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel17.setText("+");
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel20.setText("+");
-
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel21.setText("Prima");
+        jLabel21.setText("Indemnización Primer Año");
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel22.setText("Cesantias");
-
-        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel23.setText("Vacaciones");
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel24.setText("Intereses de las Cesantias");
+        jLabel22.setText("Indemnización Segundo Año en adelante");
+        jLabel22.setToolTipText("");
 
         jblsaldeven.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jblsaldeven.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jblsaldeven.setText("$0");
 
         jblEPS.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jblEPS.setForeground(new java.awt.Color(255, 102, 102));
         jblEPS.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jblEPS.setText("$0");
-
-        jblPension.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jblPension.setForeground(new java.awt.Color(255, 102, 102));
-        jblPension.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jblPension.setText("$0");
-
-        jblAuxTx.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jblAuxTx.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jblAuxTx.setText("$0");
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -462,15 +435,11 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
                                         .addGap(19, 19, 19)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel21)
-                                            .addComponent(jLabel22)
-                                            .addComponent(jLabel23)
-                                            .addComponent(jLabel24))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                                            .addComponent(jLabel22))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jblsaldeven, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                                            .addComponent(jblEPS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jblPension, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jblAuxTx, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(jblsaldeven, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jblEPS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jftxtAuxTx, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12))))
@@ -487,9 +456,7 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel20))
+                            .addComponent(jLabel15))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -560,17 +527,7 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(jLabel22)
                     .addComponent(jblEPS))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel23)
-                    .addComponent(jblPension))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel24)
-                    .addComponent(jblAuxTx))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(53, 53, 53)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jbltextopie)
@@ -642,8 +599,6 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
         }
         jblsaldeven.setText(String.valueOf(this.persona.getPrima()));
         jblEPS.setText(String.valueOf(this.persona.getCesantias()));
-        jblPension.setText(String.valueOf(this.persona.getVacaciones()));
-        jblAuxTx.setText(String.valueOf(this.persona.getIntcesantias()));
         jblSalNeto.setText(String.valueOf(this.persona.getLiquidacion()));
     }
 
@@ -704,15 +659,11 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -722,9 +673,7 @@ public class InterfazComprobantePagoIndemnizacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel jblAuxTx;
     private javax.swing.JLabel jblEPS;
-    private javax.swing.JLabel jblPension;
     private javax.swing.JLabel jblSalNeto;
     private javax.swing.JLabel jblsaldeven;
     private javax.swing.JLabel jbltextopie;

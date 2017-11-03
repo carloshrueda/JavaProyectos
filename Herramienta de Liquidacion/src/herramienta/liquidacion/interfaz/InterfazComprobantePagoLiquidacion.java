@@ -358,12 +358,10 @@ public class InterfazComprobantePagoLiquidacion extends javax.swing.JFrame {
         jblsaldeven.setText("$0");
 
         jblEPS.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jblEPS.setForeground(new java.awt.Color(255, 102, 102));
         jblEPS.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jblEPS.setText("$0");
 
         jblPension.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jblPension.setForeground(new java.awt.Color(255, 102, 102));
         jblPension.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jblPension.setText("$0");
 

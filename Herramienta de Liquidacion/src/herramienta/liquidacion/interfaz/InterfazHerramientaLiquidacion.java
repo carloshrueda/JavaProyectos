@@ -25,6 +25,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
 
     private InterfazComprobantePagoSalarioMensual jfrmComPagSalMen;
     private InterfazComprobantePagoLiquidacion jfrmComPagLiquidacion;
+    private InterfazComprobantePagoIndemnizacion jfrmComPagIndemnizacion;
 
     /**
      * Creates new form InterfazHerramientaLiquidacion
@@ -675,7 +676,7 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             jfrmComPagSalMen.setAlwaysOnTop(true);
             jfrmComPagSalMen.setVisible(true);
         } else if (jrbtnLiquidacion.isSelected()) {
-            //Si se seleccionó el tipo de calculo: Salario
+            //Si se seleccionó el tipo de calculo: Liquidacion
             //Calcular de la liquidación
             persona.setDiastrab((int) persona.getDiasperiodo());
             jftxtDiasLab.setValue((long) persona.getDiastrab());
@@ -690,6 +691,22 @@ public class InterfazHerramientaLiquidacion extends javax.swing.JFrame {
             }
             jfrmComPagLiquidacion.setAlwaysOnTop(true);
             jfrmComPagLiquidacion.setVisible(true);
+        } else if (jrbtnIndenmizacion.isSelected()) {
+            //Si se seleccionó el tipo de calculo: Indemnizacion
+            //Calcular de la Indemnizacion
+            persona.setDiastrab((int) persona.getDiasperiodo());
+            jftxtDiasLab.setValue((long) persona.getDiastrab());
+            //calcularIndemnizacion();
+
+            //Muestra el formulario
+            if (jfrmComPagIndemnizacion == null) {
+                jfrmComPagIndemnizacion = new InterfazComprobantePagoIndemnizacion(persona);
+            } else {
+                jfrmComPagIndemnizacion.setPersona(persona);
+                jfrmComPagIndemnizacion.cargarFormulario();
+            }
+            jfrmComPagIndemnizacion.setAlwaysOnTop(true);
+            jfrmComPagIndemnizacion.setVisible(true);
         }
 
     }//GEN-LAST:event_jbtnCalcularActionPerformed
